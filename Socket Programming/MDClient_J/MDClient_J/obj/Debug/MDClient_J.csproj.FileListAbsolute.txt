@@ -1,0 +1,12 @@
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\bin\Debug\MDClient_J.exe.config
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\bin\Debug\MDClient_J.exe
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\bin\Debug\MDClient_J.pdb
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\bin\Debug\GenericSocket.dll
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\bin\Debug\GenericSocket.pdb
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\obj\Debug\MDClient_J.csprojResolveAssemblyReference.cache
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\obj\Debug\MDClient_J.Form1.resources
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\obj\Debug\MDClient_J.Properties.Resources.resources
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\obj\Debug\MDClient_J.csproj.GenerateResource.Cache
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\obj\Debug\MDClient_J.exe
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\obj\Debug\MDClient_J.pdb
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\MDClient_J\bin\Debug\mdtypes.dll

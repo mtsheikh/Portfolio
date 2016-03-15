@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuhammadTahaSheikhCMPE2300Ica09", "MuhammadTahaSheikhCMPE2300Ica09\MuhammadTahaSheikhCMPE2300Ica09.csproj", "{D7CB230E-F09A-4F7F-9EA1-5903AED285FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7CB230E-F09A-4F7F-9EA1-5903AED285FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7CB230E-F09A-4F7F-9EA1-5903AED285FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7CB230E-F09A-4F7F-9EA1-5903AED285FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7CB230E-F09A-4F7F-9EA1-5903AED285FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

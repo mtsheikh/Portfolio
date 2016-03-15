@@ -1,0 +1,6 @@
+\\mac\Home\Downloads\CMPE1700MuhammadTahaSheikhLab03\CMPE1700MuhammadTahaSheikhLab03\bin\Debug\CMPE1700MuhammadTahaSheikhLab03.exe.config
+\\mac\Home\Downloads\CMPE1700MuhammadTahaSheikhLab03\CMPE1700MuhammadTahaSheikhLab03\bin\Debug\CMPE1700MuhammadTahaSheikhLab03.exe
+\\mac\Home\Downloads\CMPE1700MuhammadTahaSheikhLab03\CMPE1700MuhammadTahaSheikhLab03\bin\Debug\CMPE1700MuhammadTahaSheikhLab03.pdb
+\\mac\Home\Downloads\CMPE1700MuhammadTahaSheikhLab03\CMPE1700MuhammadTahaSheikhLab03\obj\Debug\CMPE1700MuhammadTahaSheikhLab03.csprojResolveAssemblyReference.cache
+\\mac\Home\Downloads\CMPE1700MuhammadTahaSheikhLab03\CMPE1700MuhammadTahaSheikhLab03\obj\Debug\CMPE1700MuhammadTahaSheikhLab03.exe
+\\mac\Home\Downloads\CMPE1700MuhammadTahaSheikhLab03\CMPE1700MuhammadTahaSheikhLab03\obj\Debug\CMPE1700MuhammadTahaSheikhLab03.pdb

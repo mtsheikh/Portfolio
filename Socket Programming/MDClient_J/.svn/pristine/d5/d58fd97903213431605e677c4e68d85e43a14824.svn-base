@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Net.Sockets;
+
+namespace MDClient_J
+{
+    public partial class Form1 : Form
+    {
+        /*Notes for menu bar
+        *File
+        *-Connect --> button click event
+        *-Set IP --> Text box
+        *   -have placeholder for text "Set IP"
+        *   -when empty default to "bits.net.nait.ca"
+        *-Set Port --> Text box
+        *   -have placeholder for text "Set Port"
+        *   -when empty default to "1666"
+        *Color --> click event
+        *   -launches a color dialog
+        *Thickness
+        *   -Numerical --> combo box of like 5 options
+        */
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void tsmColour_Click(object sender, EventArgs e)
+        {
+            if (cdPenColour.ShowDialog() == DialogResult.OK)
+            {
+                //set colour of connection object --> selected colour
+            }
+        }
+
+        private void tsmConnect_Click(object sender, EventArgs e)
+        {
+            Socket connectionStart = null;
+            //initialize the connection off of the given info from the other file dialogs
+            if(tstbIP.Text.Length > 0 && tstbPort.Text.Length > 0)
+            {
+                try
+                {
+                    connectionStart = new Socket(AddressFamily.InterNetwork, 
+                        SocketType.Stream, ProtocolType.Tcp);
+                    
+                    //connectionStart.BeginConnect(tstbIP.Text, tstbPort.Text, SOMECALLBACK, connectionStart);
+                    //pass into and create GenericSocketItem
+                }
+                catch (Exception ex)
+                {
+                    this.Text = ex.Message;
+                }
+            }
+        }
+    }
+}

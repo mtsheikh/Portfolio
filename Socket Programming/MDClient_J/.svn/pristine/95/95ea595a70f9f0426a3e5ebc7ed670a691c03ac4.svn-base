@@ -1,0 +1,86 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Net.Sockets;
+using System.Drawing;
+
+
+namespace GenericSocket
+{
+    public class GenericSocketJ
+    {
+        // this delegate type is used to transmit data to the main form
+        public delegate void delVoidString(string value);
+
+        //Declaring the delegates to pass error and data in the main form 
+
+        public delVoidString DataDelegate = null;
+        public delVoidString ErrorDelegate = null;
+
+        // Socket
+        public Socket connection = null;
+        // this queue holds the data to send
+        public Queue<object> sendDataQueue = new Queue<object>();
+        // this queue holds the data to recieve
+        public Queue<object> recieveDataQueue = new Queue<object>();
+
+        public GenericSocketJ(Socket sok)
+        {
+            connection = sok;
+            // this thread would take the Processed data and send it to the main
+            Thread process = new Thread(Process);
+            process.Start();
+
+        }
+
+        public void RecieveThread(object Data)
+        {
+
+        }
+
+        public void Recieve()
+        {
+            while (true)
+            {
+                Byte[] buff = new byte[10000];
+                connection.Receive(buff);
+                BinaryFormatter bf = new BinaryFormatter();
+            }
+        }
+
+        // this method will take a value from a queue and trasmit it to the server 
+        public void Send()
+        {
+            while (true)
+            {
+                if (sendDataQueue.Count > 1)
+                {
+                    Thread Send = new Thread(SendThread);
+                    Send.Start(sendDataQueue.Dequeue());
+                }
+            }
+        }
+
+        public void SendThread(object Data)
+        {
+            // this serializes and trasmits the data
+            MemoryStream ms = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(ms, Data);
+            connection.Send(ms.GetBuffer());
+        }
+
+        public void Process()
+        {
+
+
+        }
+
+    }
+}

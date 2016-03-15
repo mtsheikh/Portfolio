@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace GenericSocket
+{
+    public class GenericSocket
+    {
+        // these dellegates are named the same as the ones in the main to get error and data
+        public delegate void delVoidData(string data);
+        public delegate void delVoidError(string error);
+
+        public GenericSocket()
+        {
+
+            Thread thread = new Thread(DoSomething);
+            thread.Start();
+        }
+
+        public static void DoSomething()
+        {
+
+        }
+
+    }
+}
