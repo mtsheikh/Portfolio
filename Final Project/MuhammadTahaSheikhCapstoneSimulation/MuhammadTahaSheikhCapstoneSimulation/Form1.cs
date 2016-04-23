@@ -150,8 +150,11 @@ namespace MuhammadTahaSheikhCapstoneSimulation
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //timer2.Stop();
-            //timer1.Start();
+            bool bRes = _box.GetLastMouseLeftClick(out Pcoord);
+            listBox1.Items.Add(Pcoord);
+            listBox1.Items.Add(accessPoints[0]._radius.ToString() + " The first Access Point: " + accessPoints[0]._origin.ToString());
+            listBox1.Items.Add(accessPoints[1]._radius.ToString() + " The second Access Point: " + accessPoints[1]._origin.ToString());
+            listBox1.Items.Add(accessPoints[2]._radius.ToString() + " The third Access Point: " + accessPoints[2]._origin.ToString());
         }
 
         private void timer2_Tick(object sender, EventArgs e)
