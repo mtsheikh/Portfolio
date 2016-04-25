@@ -1,0 +1,26 @@
+﻿body
+{
+    background-color:royalblue;
+    font-family:'Times New Roman';
+}
+
+h1
+{
+    color:purple;
+    text-align:center;
+}
+
+a
+{
+    color:red;
+}
+
+footer
+{
+    text-align:center;
+}
+
+header
+{
+    text-align:center;
+}
