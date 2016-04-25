@@ -1,0 +1,162 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Net.Sockets;
+using System.Drawing;
+
+namespace GenericSocket
+{
+    public class GenericSocketJ
+    {
+        // this delegate type is used to transmit data to the main form
+        public delegate void delVoidObject(object value);
+
+        //Declaring the delegates to pass error and data in the main form 
+
+        private delVoidObject DataDelegate = null;
+        private delVoidObject ErrorDelegate = null;
+        public int bytesRecieved { get; set; }
+        public int FragmentsRecieved { get; set; }
+        public int FramesRecieved { get; set; }
+
+        // Socket
+        private Socket connection = null;
+        // this queue holds the data to send
+        private Queue<object> sendDataQueue = new Queue<object>();
+        // this queue holds the data to recieve
+        private Queue<object> recieveDataQueue = new Queue<object>();
+        // this is to see if the threads should keep running
+        private volatile bool isRunning = true;
+
+        public GenericSocketJ(Socket sok, delVoidObject data, delVoidObject error)
+        {
+            connection = sok;
+            DataDelegate = data;
+            ErrorDelegate = error;
+            // this thread would take the Processed data and send it to the main
+            // starting all the threads on the constructor, as soon as things load up 
+            Thread process = new Thread(Process);
+            process.Start();
+            Thread Send = new Thread(SendMethod);
+            Send.IsBackground = true;
+            Send.Start();
+            Thread Recieve = new Thread(RecieveMethod);
+            Recieve.IsBackground = true;
+            Recieve.Start();
+        }
+
+		//TODO: Good Start...
+		//TODO:  Remember all threads should be Sleep(0)ing, otherwise spastic behaviour will result done
+		//TODO:  You will still need to add the destack/defrag code, but you know that
+		//TODO:  Error handling : when soft/hard error encountered, enqueue the error object ( your choice ) and exit the thread - NO running flag modifications
+		public void RecieveMethod()
+        {
+            while (isRunning)
+            {
+                Byte[] buff = new byte[10000];
+                try
+                {
+                    connection.Receive(buff);
+                }
+                catch (Exception e)
+                {
+                    ErrorDelegate?.Invoke(e.Message);
+                    isRunning = false;                    
+                    break;
+                }
+
+                BinaryFormatter bf = new BinaryFormatter();
+                MemoryStream ms = new MemoryStream(buff);
+
+                while (ms.Position < buff.Count())
+                {
+                    try
+                    {
+                        recieveDataQueue.Enqueue((bf.Deserialize(ms)));
+                    }
+                    catch (SerializationException se)
+                    {
+                        ErrorDelegate?.Invoke(se.Message);
+                        isRunning = false;
+                        break;
+                    }
+                }
+                Thread.Sleep(0);
+            }
+
+        }
+        // This pushes things to queue 
+        public void CaptureLineToQueue(object o)
+        {
+            lock (sendDataQueue)
+            {
+                sendDataQueue.Enqueue(o);
+            }
+
+        }
+        // this method will take a value from a queue and trasmit it to the server 
+        //TODO: The Q should be private, accessible to user/client via method or property that nicely adds to outgoing send Q objects... Yes ?
+        public void SendMethod()
+        {
+            // while send thread is running, check to see if there is anything in the send queue and than serialize and send it
+            while (isRunning)
+            {                
+                if (sendDataQueue.Count > 0)
+                {
+                    lock (sendDataQueue)
+                    {
+                        SendThread();
+                    }
+                }
+            }
+            Thread.Sleep(0);
+
+        }
+
+        public void SendThread()
+        {
+            // this serializes and trasmits the data
+            MemoryStream ms = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(ms, sendDataQueue.Dequeue());
+
+            connection.Send(ms.GetBuffer());
+        }
+        //TODO:  let the Process thread encounter the q'd error, dispatch it and let it fondle the running flag to ensure closure
+
+        public void Process()
+        {
+            while (isRunning)
+            {
+                if (recieveDataQueue.Count > 0)
+                {
+                    try
+                    {
+                        object temp = recieveDataQueue.Dequeue();
+                        if (temp is string)
+                        {
+                            ErrorDelegate?.Invoke(temp);
+                        }
+                        else
+                        {
+                            // this passes the information to the main UI
+                            DataDelegate?.Invoke(temp);
+                        }
+                    }
+                    catch (Exception se)
+                    {
+                        ErrorDelegate?.Invoke(se.Message);
+                        isRunning = false;
+                    }
+                }
+            }
+            Thread.Sleep(0);
+        }
+    }
+}

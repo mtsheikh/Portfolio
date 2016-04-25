@@ -1,0 +1,119 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Net.Sockets;
+using System.Drawing;
+
+
+namespace GenericSocket
+{
+    public class GenericSocketJ
+    {
+        // this delegate type is used to transmit data to the main form
+        public delegate void delVoidObject(object value);
+
+        //Declaring the delegates to pass error and data in the main form 
+
+        public delVoidObject DataDelegate = null;
+        public delVoidObject ErrorDelegate = null;
+
+        // Socket
+        public Socket connection = null;
+        // this queue holds the data to send
+        public Queue<object> sendDataQueue = new Queue<object>();
+        // this queue holds the data to recieve
+        public Queue<object> recieveDataQueue = new Queue<object>();
+        // this is to see if the threads should keep running
+        public volatile bool isRunning = true;
+
+        public GenericSocketJ(Socket sok)
+        {
+            connection = sok;
+            // this thread would take the Processed data and send it to the main
+            Thread process = new Thread(Process);
+            process.Start();
+            Thread Send = new Thread(SendMethod);
+            Send.IsBackground = true;
+            Send.Start();
+            Thread Recieve = new Thread(RecieveMethod);
+            Recieve.IsBackground = true;
+            Recieve.Start();
+        }
+        
+
+        public void RecieveMethod()
+        {
+            while (isRunning)
+            {
+                Byte[] buff = new byte[10000];
+                connection.Receive(buff);
+                BinaryFormatter bf = new BinaryFormatter();
+                MemoryStream ms = new MemoryStream(buff);
+
+                while (ms.Position < buff.Count())
+                {
+                    try
+                    {
+                        recieveDataQueue.Enqueue((bf.Deserialize(ms)));
+                    }
+                    catch (SerializationException se)
+                    {
+                        // Text = se.Message;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // this method will take a value from a queue and trasmit it to the server 
+        public void SendMethod()
+        {
+            // while send thread is running, check to see if there is anything in the send queue and than serialize and send it
+            while (isRunning)
+            {
+                if (sendDataQueue.Count > 0)
+                {
+                    SendThread(sendDataQueue.Dequeue());
+                }
+            }
+        }
+        
+        public void SendThread(object Data)
+        {
+            // this serializes and trasmits the data
+            MemoryStream ms = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(ms, Data);
+
+            connection.Send(ms.GetBuffer());
+        }
+
+        public void Process()
+        {
+            while (isRunning)
+            {
+                if(recieveDataQueue.Count > 0)
+                {
+                    object temp = recieveDataQueue.Dequeue();
+                     if (temp is string)
+                    {
+                        ErrorDelegate?.Invoke(temp);
+                    }
+                     else
+                    {
+                        // this passes the information to the main UI
+                        DataDelegate?.Invoke(temp);
+                    }
+                }
+            }
+
+        }
+
+    }
+}

@@ -1,0 +1,161 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Net.Sockets;
+using mdtypes;
+using GenericSocket;
+
+namespace MDClient_J
+{
+    public partial class Form1 : Form
+    {
+        
+        private ushort penThickness = 1;
+        private Point lastPoint;
+        private bool Capture = false;
+        private Color penColor = Color.Black;
+        GenericSocketJ ourGenericSocketObject;
+        /**********************************************
+        *Notes for menu bar
+        *File
+        *-Connect --> button click event
+        *-Set IP --> Text box
+        *   -have placeholder for text "Set IP"
+        *   -when empty default to "bits.net.nait.ca"
+        *-Set Port --> Text box
+        *   -have placeholder for text "Set Port"
+        *   -when empty default to "1666"
+        *Color --> click event
+        *   -launches a color dialog
+        *Thickness
+        *   -Numerical --> combo box of like 5 options
+        **********************************************/
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void tsmColour_Click(object sender, EventArgs e)
+        {
+            if (cdPenColour.ShowDialog() == DialogResult.OK)
+            {
+                //set colour of sent objects --> selected colour
+                penColor = cdPenColour.Color;
+            }
+        }
+
+        private void tsmConnect_Click(object sender, EventArgs e)
+        {
+            Socket connectionStart = null;
+            //initialize the connection off of the given info from the other file dialogs
+            if(tstbIP.Text.Length > 0 && tstbPort.Text.Length > 0)
+            {
+                try
+                {
+                    connectionStart = new Socket(AddressFamily.InterNetwork, 
+                        SocketType.Stream, ProtocolType.Tcp);
+                    connectionStart.Connect(tstbIP.Text, Convert.ToInt32(tstbPort.Text));
+                    ourGenericSocketObject = new GenericSocketJ(connectionStart, DrawLineObject, DisplayError);
+                    
+                    //pass into and create GenericSocketItem
+                }
+                catch (Exception ex)
+                {
+                    this.Text = ex.Message;
+                }
+            }
+        }
+
+        private void cb_thickness_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cb_thickness.Text)
+            {
+                case ("Tiny"):
+                    penThickness = 1;
+                    break;
+                case ("Small"):
+                    penThickness = 3;
+                    break;
+                case ("Normal"):
+                    penThickness = 5;
+                    break;
+                case ("Large"):
+                    penThickness = 10;
+                    break;
+                case ("Huge"):
+                    penThickness = 30;
+                    break;
+            }
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            //trigger the capture start
+            Capture = true;
+            //save current Point
+            lastPoint = e.Location;
+        }
+
+        public object PackageData(Point s, Point e, ushort t, Color c)
+        {
+            LineSegment ls = new LineSegment();
+            ls.Colour = c;
+            ls.Thickness = t;
+            ls.Start = s;
+            ls.End = e;
+            return ls;
+        }
+
+		//TODO:  please refactor temp - hard to guess what a temp is.... checkmark
+		//TODO:  Do not expose the Q to here.... it should be GS method/property that will take care to lock the Q and enqueue   checkmark
+		//TODO:   then Send thread will perform like de-Q and actual send... Yes ? checkmark
+		private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(Capture && ourGenericSocketObject != null)
+            {
+                ourGenericSocketObject.CaptureLineToQueue(PackageData(lastPoint, e.Location, penThickness, penColor));
+                lastPoint = e.Location;
+            }
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            Capture = false;
+        }
+
+        public void DrawLineObject(object o)
+        {
+            Graphics g = CreateGraphics();
+            LineSegment l = o as LineSegment;
+
+            Invoke((MethodInvoker)(() =>g.DrawLine(new Pen(l.Colour, l.Thickness), l.Start, l.End)));
+        }
+
+        public void DisplayError(object o)
+        {
+            string error = o as String;
+            Invoke((MethodInvoker)(() => lblError.Text = error));
+        }
+
+        public void setFramesRecieved()
+        {
+            framesRecievedToolStripMenuItem.Text = "Frames Recieved (" + ourGenericSocketObject.FramesRecieved + ")";
+        }
+
+        public void setByteCount()
+        {
+            byteCountToolStripMenuItem.Text = "Frames Recieved (" + ourGenericSocketObject.bytesRecieved + ")";
+        }
+
+        public void setFragmentsRecieved()
+        {
+            fragmentsRecievedToolStripMenuItem.Text = "Frames Recieved (" + ourGenericSocketObject.FragmentsRecieved + ")";
+        }
+    }
+}

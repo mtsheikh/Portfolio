@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+
+
+namespace GenericSocket
+{
+    public class GenericSocket
+    {
+        // this delegate type is used to transmit data to the main form
+        public delegate void delVoidString(string value);
+
+        //Declaring the delegates to pass error and data in the main form 
+
+        public delVoidString DataDelegate = null;
+        public delVoidString ErrorDelegate = null;
+
+        public GenericSocket()
+        {
+            // this thread would take the Processed data and send it to the main
+            Thread process = new Thread(Process);
+            process.Start();
+        }
+         
+        // this method will take a value from a queue and trasmit it to the server 
+        public static void Send(object Data)
+        {            
+            
+
+            MemoryStream ms = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(ms, Data);
+        }
+
+        public static void Process()
+        {
+
+        }
+
+    }
+}

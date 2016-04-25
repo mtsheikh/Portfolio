@@ -1,0 +1,9 @@
+\\mac\home\Documents\Visual Studio 2015\Projects\MolarMassCalculatorLINQA\MolarMassCalculatorLINQA\bin\Debug\MolarMassCalculatorLINQA.exe.config
+\\mac\home\Documents\Visual Studio 2015\Projects\MolarMassCalculatorLINQA\MolarMassCalculatorLINQA\bin\Debug\MolarMassCalculatorLINQA.exe
+\\mac\home\Documents\Visual Studio 2015\Projects\MolarMassCalculatorLINQA\MolarMassCalculatorLINQA\bin\Debug\MolarMassCalculatorLINQA.pdb
+\\mac\home\Documents\Visual Studio 2015\Projects\MolarMassCalculatorLINQA\MolarMassCalculatorLINQA\obj\Debug\MolarMassCalculatorLINQA.csprojResolveAssemblyReference.cache
+\\mac\home\Documents\Visual Studio 2015\Projects\MolarMassCalculatorLINQA\MolarMassCalculatorLINQA\obj\Debug\MolarMassCalculatorLINQA.Form1.resources
+\\mac\home\Documents\Visual Studio 2015\Projects\MolarMassCalculatorLINQA\MolarMassCalculatorLINQA\obj\Debug\MolarMassCalculatorLINQA.Properties.Resources.resources
+\\mac\home\Documents\Visual Studio 2015\Projects\MolarMassCalculatorLINQA\MolarMassCalculatorLINQA\obj\Debug\MolarMassCalculatorLINQA.csproj.GenerateResource.Cache
+\\mac\home\Documents\Visual Studio 2015\Projects\MolarMassCalculatorLINQA\MolarMassCalculatorLINQA\obj\Debug\MolarMassCalculatorLINQA.exe
+\\mac\home\Documents\Visual Studio 2015\Projects\MolarMassCalculatorLINQA\MolarMassCalculatorLINQA\obj\Debug\MolarMassCalculatorLINQA.pdb

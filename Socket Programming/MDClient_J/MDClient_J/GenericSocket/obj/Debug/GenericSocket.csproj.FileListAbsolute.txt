@@ -1,0 +1,5 @@
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\GenericSocket\bin\Debug\GenericSocket.dll
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\GenericSocket\bin\Debug\GenericSocket.pdb
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\GenericSocket\obj\Debug\GenericSocket.csprojResolveAssemblyReference.cache
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\GenericSocket\obj\Debug\GenericSocket.dll
+\\mac\home\Documents\Visual Studio 2015\Projects\MDClient_J\GenericSocket\obj\Debug\GenericSocket.pdb

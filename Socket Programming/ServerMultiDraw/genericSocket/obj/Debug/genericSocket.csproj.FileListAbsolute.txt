@@ -1,0 +1,6 @@
+C:\Users\so-f-\Desktop\gd\ServerMultiDraw\genericSocket\bin\Debug\genericSocket.dll
+C:\Users\so-f-\Desktop\gd\ServerMultiDraw\genericSocket\bin\Debug\genericSocket.pdb
+C:\Users\so-f-\Desktop\gd\ServerMultiDraw\genericSocket\bin\Debug\mdtypes.dll
+C:\Users\so-f-\Desktop\gd\ServerMultiDraw\genericSocket\obj\Debug\genericSocket.csprojResolveAssemblyReference.cache
+C:\Users\so-f-\Desktop\gd\ServerMultiDraw\genericSocket\obj\Debug\genericSocket.dll
+C:\Users\so-f-\Desktop\gd\ServerMultiDraw\genericSocket\obj\Debug\genericSocket.pdb
